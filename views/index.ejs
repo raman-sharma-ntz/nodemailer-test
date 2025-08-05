@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Office365 SMTP Test</title>
+  </head>
+  <body>
+    <style>
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+      .modal-content {
+        background-color: #fff;
+        margin: 10% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 400px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+    </style>
+    <h1>Send Email via SMTP</h1>
+    <form action="/send" method="POST">
+      <div
+        style="
+          background: #fff3cd;
+          border: 1px solid #ffeeba;
+          padding: 10px;
+          margin-bottom: 15px;
+          border-radius: 5px;
+          color: #856404;
+        "
+      >
+        <strong>Note:</strong> If your account uses multi-factor authentication
+        (MFA), you must use an
+        <a
+          href="https://support.microsoft.com/en-us/account-billing/create-app-passwords-from-the-security-info-page-d8bc744a-ce3f-4d4d-89c9-eb38ab9d4137"
+          target="_blank"
+          >app password</a
+        >
+        for Office365 or
+        <a
+          href="https://support.google.com/accounts/answer/185833"
+          target="_blank"
+          >app password</a
+        >
+        for Gmail. Also, ensure SMTP is enabled for your account.
+      </div>
+      <label>Provider:</label><br />
+      <select name="provider" required>
+        <option value="office365">Office365</option>
+        <option value="gmail">Gmail</option></select
+      ><br /><br />
+      <label>Your Email:</label><br />
+      <input type="email" name="email" required /><br /><br />
+      <label>Password:</label><br />
+      <input type="password" name="password" required /><br /><br />
+      <label>Recipient Email:</label><br />
+      <input type="email" name="to" required /><br /><br />
+      <label>Subject:</label><br />
+      <input type="text" name="subject" required /><br /><br />
+      <label>Message:</label><br />
+      <textarea name="message" rows="5" cols="40" required></textarea
+      ><br /><br />
+      <button type="submit">Send Email</button>
+    </form>
+    <% if (typeof success !== 'undefined') { %>
+    <div id="resultModal" class="modal" style="display: block">
+      <div class="modal-content">
+        <span
+          class="close"
+          onclick="document.getElementById('resultModal').style.display='none'"
+          >&times;</span
+        >
+        <% if (success) { %>
+        <h2>Email sent successfully!</h2>
+        <% } else { %>
+        <h2>Failed to send email.</h2>
+        <p style="color: red">Error: <%= error %></p>
+        <% } %>
+      </div>
+    </div>
+    <% } %>
+  </body>
+</html>
